@@ -12,7 +12,15 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 		<servlet-name>Parking_prototype</servlet-name>
 		<url-pattern>/parking_prototype</url-pattern>
 	</servlet-mapping>
+	<servlet>
+	    <servlet-name>SignParkingServlet</servlet-name>
+	    <servlet-class>parking.SignGuestbookServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+	    <servlet-name>SignParkingServlet</servlet-name>
+	    <url-pattern>/sign_in</url-pattern>
+	</servlet-mapping>
 	<welcome-file-list>
-		<welcome-file>index.html</welcome-file>
+		<welcome-file>guestbook.jsp</welcome-file>
 	</welcome-file-list>
 </web-app>

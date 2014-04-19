@@ -104,21 +104,23 @@
 <%
     } else {
 %>
-<p>Hello!
-<a href="<%= userService.createLoginURL(request.getRequestURI()) %>">Sign in</a>
-to include your name with greetings you post.</p>
+	<p>
+		<a href="<%= userService.createLoginURL(request.getRequestURI()) %>">Sign in</a>
+		to use the system.
+	</p>
 <%
     }
 %>
 
-    <form action="/sign" method="post">
+<% if (user != null){ %>
+    <form action="/sign_in" method="post">
    		<fieldset>
    		<legend>Send us a message:</legend>
 	      <div><textarea name="content" rows="3" cols="60"></textarea></div>
 	      <div><input type="submit" value="Post Greeting" /></div>
-	      <div><input type="hidden" name="userLatitude" id="userLatitude" /></div>
-	      <div><input type="hidden" name="userLongitude" id="userLongitude" /></div>
-	      <div><input type="hidden" name="measureAccuracy" id="measureAccuracy" /></div>
+	      <div><input type="hidden" name="userLatitude" id="userLatitude" value="0"/></div>
+	      <div><input type="hidden" name="userLongitude" id="userLongitude" value="0"/></div>
+	      <div><input type="hidden" name="measureAccuracy" id="measureAccuracy" value="0"/></div>
 	      <input type="hidden" name="guestbookName" value="${fn:escapeXml(guestbookName)}"/>
       	</fieldset>
     </form>
@@ -174,5 +176,6 @@ to include your name with greetings you post.</p>
 %>
 
 	<div id="map-canvas"></div>
+	<%} %>
   </body>
 </html>
