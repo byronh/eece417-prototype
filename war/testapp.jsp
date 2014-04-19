@@ -109,6 +109,7 @@ to include your name with greetings you post.</p>
 <%
     }
 %>
+<% if (user != null) {%>
 <p>Guestbook: ${fn:escapeXml(guestbookName)}</p>
 
 <script type="text/javascript">guestbookNameString = "${fn:escapeXml(guestbookName)}";</script>
@@ -168,6 +169,6 @@ to include your name with greetings you post.</p>
     
 	<br/>
 	<div>Please click on a marker to view and/or post greetings.</div>
-		
+	<%} %>
   </body>
 </html>
