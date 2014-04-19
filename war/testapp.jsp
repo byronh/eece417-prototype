@@ -50,32 +50,7 @@
 			var infowindow = new google.maps.InfoWindow({
 			  content: contentString
 			}); 
-			
-			var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
-			var icons = {
-  				parking: {
-    				icon: iconBase + 'parking_lot_maps.png'
-  				},
-  				library: {
-    				icon: iconBase + 'library_maps.png'
-  				},
-  				info: {
-    				icon: iconBase + 'info-i_maps.png'
-  				}
-			};
-						   
-			var marker = new google.maps.Marker({       
-			  position: myLatlng,
-			  map: map,
-			  icon: icons['parking'].icon,			  
-			  title: 'Custom Marker!'
-			});    
-			
-			google.maps.event.addListener(marker, 'click', function() {
-			  selectedMarkerID = mrkID;  	
-			  infowindow.open(map, marker);
-			  getAjaxRequest();   
-			});        
+			 
 					
 			// Load the selected markers			
 			loadMarkers();       
@@ -86,7 +61,6 @@
     
   </head>
   <body>
-  
 <%
     String guestbookName = request.getParameter("guestbookName");
     if (guestbookName == null) {

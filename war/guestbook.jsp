@@ -24,7 +24,7 @@
 	</style>
 	<script type="text/javascript"
      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBskpEcwdyTf9uTqblPYNjdL-OFiLyXHbw&sensor=true">
-    </script>  
+    </script>   
 	<script type="text/javascript">
 	var map;
 	var markers = [];
@@ -114,18 +114,7 @@
 %>
 
 <% if (user != null){ %>
-    <form action="/sign_in" method="post">
-   		<fieldset>
-   		<legend>Send us a message:</legend>
-	      <div><textarea name="content" rows="3" cols="60"></textarea></div>
-	      <div><input type="submit" value="Post Greeting" /></div>
-	      <div><input type="hidden" name="userLatitude" id="userLatitude"/></div>
-	      <div><input type="hidden" name="userLongitude" id="userLongitude"/></div>
-	      <div><input type="hidden" name="measureAccuracy" id="measureAccuracy"/></div>
-	      <div><input type="hidden" name="markerID" id="markerID" value="0"/></div>
-	      <input type="hidden" name="guestbookName" value="${fn:escapeXml(guestbookName)}"/>
-      	</fieldset>
-    </form>
+<h1>Listing your greetings</h1>
 <%
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     Key guestbookKey = KeyFactory.createKey("Guestbook", guestbookName);
@@ -139,7 +128,6 @@
         <%
     } else {
         %>
-        <p>Messages in Guestbook '${fn:escapeXml(guestbookName)}'.</p>
         <%
         for (Entity greeting : greetings) {
             pageContext.setAttribute("greeting_content", greeting.getProperty("content"));

@@ -62,16 +62,29 @@ function httpCallBackFunction_loadMarkers() {
 				var msglist = "msglist_"+mrkID;
 				var gstBkNm = guestbookNameString; // "default"; 
 				
-				var contentString  = '#' + mrkID + '<div id="content">' +  	
-				  '<div class="msglist" id="'+ msglist +'"></div>' + '</div>' +
-				  '<textarea id="'+ msgbox +'" rows="2" cols="20"></textarea>' +			  
-				  '<input type="button" value="Post" onclick="postAjaxRequest('+ 
-					"'" + msgbox + "', '" + mrkID + "', '"+lat+"', '"+lng+"', '"+ gstBkNm + "', '" + msglist + "'" +')"/>';  
+				var contentString  = 'Parking ' + mrkID + '</div><div>' +
+				  '<textarea id="'+ msgbox +'" rows="2" cols="20"></textarea>' +'<br/>'+			  
+				  '<input type="button" value="Reserve" onclick="postAjaxRequest('+ 
+					"'" + msgbox + "', '" + mrkID + "', '"+lat+"', '"+lng+"', '"+ gstBkNm + "', '" + msglist + "'" +')"/></div>'; 
+				
+				var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
+				var icons = {
+	  				parking: {
+	    				icon: iconBase + 'parking_lot_maps.png'
+	  				},
+	  				library: {
+	    				icon: iconBase + 'library_maps.png'
+	  				},
+	  				info: {
+	    				icon: iconBase + 'info-i_maps.png'
+	  				}
+				};
 														
 				var marker = new google.maps.Marker({       
 					position: myLatlng,
 					map: map,
-					title: ''+mrkID
+					icon: icons['parking'].icon,
+					title: 'Parking '+mrkID
 				});
 								
 				addInfowindow(marker, contentString);
