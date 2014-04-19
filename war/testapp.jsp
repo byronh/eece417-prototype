@@ -103,14 +103,15 @@
 <%
     } else {
 %>
-<p>Hello!
-<a href="<%= userService.createLoginURL(request.getRequestURI()) %>">Sign in</a>
-to include your name with greetings you post.</p>
+<p>
+	<a href="<%= userService.createLoginURL(request.getRequestURI()) %>">Sign in</a>
+	to use the system.
+</p>
 <%
     }
 %>
 <% if (user != null) {%>
-<p>Guestbook: ${fn:escapeXml(guestbookName)}</p>
+<p>Please click on a marker to reserve a spot.</p>
 
 <script type="text/javascript">guestbookNameString = "${fn:escapeXml(guestbookName)}";</script>
 <!--<script type="text/javascript">alert(guestbookNameString);</script>-->
@@ -168,7 +169,7 @@ to include your name with greetings you post.</p>
     <div id="map-canvas"></div>
     
 	<br/>
-	<div>Please click on a marker to view and/or post greetings.</div>
+
 	<%} %>
   </body>
 </html>
