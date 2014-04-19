@@ -115,6 +115,7 @@
 
 <% if (user != null){ %>
 <h1>Listing your greetings</h1>
+<h2>Click <a href="testapp.jsp">here</a> to make a new reservation.</h2>
 <%
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     Key guestbookKey = KeyFactory.createKey("Guestbook", guestbookName);

@@ -31,7 +31,7 @@ public class SignGuestbookServlet extends HttpServlet {
         String guestbookName = req.getParameter("guestbookName");
         Key guestbookKey = KeyFactory.createKey("Guestbook", guestbookName);
         String content = req.getParameter("content");
-        String markerID = req.getParameter("markerID");
+        int markerID = Integer.parseInt(req.getParameter("markerID"));
         float userLatitude = Float.parseFloat(req.getParameter("userLatitude"));
         float userLongitude = Float.parseFloat(req.getParameter("userLongitude"));
         float measureAccuracy = Float.parseFloat(req.getParameter("measureAccuracy"));

@@ -85,6 +85,7 @@
     }
 %>
 <% if (user != null) {%>
+<h4>Click <a href="guestbook.jsp">here</a> to see your reservations.</h4>
 <p>Please click on a marker to reserve a spot.</p>
 
 <script type="text/javascript">guestbookNameString = "${fn:escapeXml(guestbookName)}";</script>
