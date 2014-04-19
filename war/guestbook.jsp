@@ -22,8 +22,9 @@
 		body { height: 100%; margin: 0; padding: 0 }
 		#map-canvas { height: 400px; width: 500px }
 	</style>
-	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBskpEcwdyTf9uTqblPYNjdL-OFiLyXHbw&sensor=true">
-	</script>
+	<script type="text/javascript"
+     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBskpEcwdyTf9uTqblPYNjdL-OFiLyXHbw&sensor=true">
+    </script>  
 	<script type="text/javascript">
 	var map;
 	var markers = [];
@@ -118,9 +119,10 @@
    		<legend>Send us a message:</legend>
 	      <div><textarea name="content" rows="3" cols="60"></textarea></div>
 	      <div><input type="submit" value="Post Greeting" /></div>
-	      <div><input type="hidden" name="userLatitude" id="userLatitude" value="0"/></div>
-	      <div><input type="hidden" name="userLongitude" id="userLongitude" value="0"/></div>
-	      <div><input type="hidden" name="measureAccuracy" id="measureAccuracy" value="0"/></div>
+	      <div><input type="hidden" name="userLatitude" id="userLatitude"/></div>
+	      <div><input type="hidden" name="userLongitude" id="userLongitude"/></div>
+	      <div><input type="hidden" name="measureAccuracy" id="measureAccuracy"/></div>
+	      <div><input type="hidden" name="markerID" id="markerID" value="0"/></div>
 	      <input type="hidden" name="guestbookName" value="${fn:escapeXml(guestbookName)}"/>
       	</fieldset>
     </form>
@@ -141,20 +143,12 @@
         <%
         for (Entity greeting : greetings) {
             pageContext.setAttribute("greeting_content", greeting.getProperty("content"));
+            pageContext.setAttribute("marker_id", greeting.getProperty("markerID"));
             pageContext.setAttribute("user_latitude", greeting.getProperty("userLatitude"));
             pageContext.setAttribute("user_longitude", greeting.getProperty("userLongitude"));
             pageContext.setAttribute("measure_accuracy", greeting.getProperty("measureAccuracy"));
-            pageContext.setAttribute("greeting_user", greeting.getProperty("user"));
-            if (greeting.getProperty("user") == null) {
-                %>
-                <p>An anonymous person wrote:</p>
-                <%
-            } else {
-                %>
-                <p><b>${fn:escapeXml(greeting_user.nickname)}</b> wrote:</p>
-                <%
-            }
-            %>
+            pageContext.setAttribute("greeting_user", greeting.getProperty("user")); %>
+            <p><b>${fn:escapeXml(greeting_user.nickname)}</b> wrote:</p>
             <blockquote>${fn:escapeXml(greeting_content)}</blockquote>
             
             <% if (greeting.getProperty("userLatitude") != null && 
@@ -162,6 +156,9 @@
             	<p> Message sent at latitude: ${fn:escapeXml(user_latitude)}, 
 	            Latitude: ${fn:escapeXml(user_longitude)}.
 	            Measure accuracy: ${fn:escapeXml(measure_accuracy)} meters.	
+	            </p>
+	            <p>
+	            	MarkerID: ${fn:escapeXml(marker_id)}
 	            </p>
             	<script>
 		            markers.push(new google.maps.Marker({

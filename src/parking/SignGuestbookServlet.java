@@ -31,6 +31,7 @@ public class SignGuestbookServlet extends HttpServlet {
         String guestbookName = req.getParameter("guestbookName");
         Key guestbookKey = KeyFactory.createKey("Guestbook", guestbookName);
         String content = req.getParameter("content");
+        String markerID = req.getParameter("markerID");
         float userLatitude = Float.parseFloat(req.getParameter("userLatitude"));
         float userLongitude = Float.parseFloat(req.getParameter("userLongitude"));
         float measureAccuracy = Float.parseFloat(req.getParameter("measureAccuracy"));
@@ -42,6 +43,7 @@ public class SignGuestbookServlet extends HttpServlet {
         greeting.setProperty("userLatitude", userLatitude);
         greeting.setProperty("userLongitude", userLongitude);
         greeting.setProperty("measureAccuracy", measureAccuracy);
+        greeting.setProperty("markerID", markerID);
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
         datastore.put(greeting);
 

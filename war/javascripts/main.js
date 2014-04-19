@@ -59,14 +59,14 @@ function httpCallBackFunction_loadMarkers() {
 								
 				var mrkID = ""+srl;
 				var msgbox = "msgbox_"+mrkID;				
-				var msglist = "msglist_"+mrkID; 
+				var msglist = "msglist_"+mrkID;
 				var gstBkNm = guestbookNameString; // "default"; 
 				
 				var contentString  = '#' + mrkID + '<div id="content">' +  	
 				  '<div class="msglist" id="'+ msglist +'"></div>' + '</div>' +
 				  '<textarea id="'+ msgbox +'" rows="2" cols="20"></textarea>' +			  
 				  '<input type="button" value="Post" onclick="postAjaxRequest('+ 
-					"'" + msgbox + "', '" + mrkID + "', '" + gstBkNm + "', '" + msglist + "'" +')"/>';  
+					"'" + msgbox + "', '" + mrkID + "', '"+lat+"', '"+lng+"', '"+ gstBkNm + "', '" + msglist + "'" +')"/>';  
 														
 				var marker = new google.maps.Marker({       
 					position: myLatlng,
@@ -140,12 +140,12 @@ function httpCallBackFunction_getAjaxRequest() {
 	}		
 }
 
-function postAjaxRequest(postMsg, markerID, guestbookName, rspMsgList) {
+function postAjaxRequest(postMsg, markerID, latitude, longitude, guestbookName,rspMsgList) {
 	//alert("postAjaxRequest");
 	try {
 		xmlHttpReq = new XMLHttpRequest();
 		xmlHttpReq.onreadystatechange = httpCallBackFunction_postAjaxRequest;
-		var url = "/sign";
+		var url = "/sign_in";
 	
 		xmlHttpReq.open("POST", url, true);
 		xmlHttpReq.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');		
@@ -154,7 +154,8 @@ function postAjaxRequest(postMsg, markerID, guestbookName, rspMsgList) {
 		var markerIDValue = markerID; 
 		var guestbookNameValue = guestbookName; 
     	
-		xmlHttpReq.send("postMsg="+postMsgValue+"&markerID="+markerIDValue+"&guestbookName="+guestbookNameValue);
+		xmlHttpReq.send("content="+postMsgValue+"&markerID="+markerIDValue+"&guestbookName="+guestbookNameValue+
+						"&userLatitude="+latitude+"&userLongitude="+longitude+"&measureAccuracy=2");
     	
     	//alert();
     	
