@@ -131,7 +131,7 @@
     Key guestbookKey = KeyFactory.createKey("Guestbook", guestbookName);
     // Run an ancestor query to ensure we see the most up-to-date
     // view of the Greetings belonging to the selected Guestbook.
-    Query query = new Query("Greeting", guestbookKey).addSort("date", Query.SortDirection.DESCENDING);
+    Query query = new Query("Greeting", guestbookKey).addSort("date", Query.SortDirection.DESCENDING).addFilter("user", Query.FilterOperator.EQUAL, user);
     List<Entity> greetings = datastore.prepare(query).asList(FetchOptions.Builder.withLimit(10));
     if (greetings.isEmpty()) {
         %>
