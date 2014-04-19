@@ -184,9 +184,7 @@ function httpCallBackFunction_postAjaxRequest() {
 		}
 		
 		if(xmlDoc){				
-			//alert(xmlHttpReq.responseText);			
-			document.getElementById("msglist_"+selectedMarkerID).innerHTML=xmlHttpReq.responseText;
-			document.getElementById("msgbox_"+selectedMarkerID).value = "";
+			alert("Greeting Posted.");
 		}else{
 			alert("No data.");
 		}	
