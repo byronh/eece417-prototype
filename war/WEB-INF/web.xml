@@ -20,6 +20,14 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 	    <servlet-name>SignParkingServlet</servlet-name>
 	    <url-pattern>/sign_in</url-pattern>
 	</servlet-mapping>
+	<servlet>
+	    <servlet-name>QueryProcessorServlet</servlet-name>
+	    <servlet-class>parking.QueryProcessorServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+	    <servlet-name>QueryProcessorServlet</servlet-name>
+	    <url-pattern>/queryprocessor/*</url-pattern>
+	</servlet-mapping>
 	<welcome-file-list>
 		<welcome-file>guestbook.jsp</welcome-file>
 	</welcome-file-list>
