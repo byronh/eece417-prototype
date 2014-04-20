@@ -29,17 +29,22 @@ public class SignGuestbookServlet extends HttpServlet {
         // Greetings for a given Guestbook.  However, the write rate to each
         // Guestbook should be limited to ~1/second.
         String guestbookName = req.getParameter("guestbookName");
-        Key guestbookKey = KeyFactory.createKey("Guestbook", guestbookName);
-        String content = req.getParameter("content");
+        Key guestbookKey = KeyFactory.createKey("Parking", "Parking");
         int markerID = Integer.parseInt(req.getParameter("markerID"));
+        int day = Integer.parseInt(req.getParameter("day"));
+        int month = Integer.parseInt(req.getParameter("month"));
+        int year = Integer.parseInt(req.getParameter("year"));
+        int amount = Integer.parseInt(req.getParameter("amount"));
         float userLatitude = Float.parseFloat(req.getParameter("userLatitude"));
         float userLongitude = Float.parseFloat(req.getParameter("userLongitude"));
         float measureAccuracy = Float.parseFloat(req.getParameter("measureAccuracy"));
-        Date date = new Date();
+        Date reservationDate = new Date(year, month, day);
+        Date registerDate = new Date();
         Entity greeting = new Entity("Greeting", guestbookKey);
         greeting.setProperty("user", user);
-        greeting.setProperty("date", date);
-        greeting.setProperty("content", content);
+        greeting.setProperty("date", registerDate);
+        greeting.setProperty("reservationDate", reservationDate);
+        greeting.setProperty("amountOfHours", amount);
         greeting.setProperty("userLatitude", userLatitude);
         greeting.setProperty("userLongitude", userLongitude);
         greeting.setProperty("measureAccuracy", measureAccuracy);
@@ -47,6 +52,6 @@ public class SignGuestbookServlet extends HttpServlet {
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
         datastore.put(greeting);
 
-        resp.sendRedirect("/guestbook.jsp?guestbookName=" + guestbookName);
+        resp.sendRedirect("/guestbook.jsp");
     }
 }

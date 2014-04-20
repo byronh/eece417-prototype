@@ -97,9 +97,9 @@ function httpCallBackFunction_loadMarkers() {
 				'<label for="day'+mrkID+'">Day</label>'+day+"<br/>"+
 				'<label for="year'+mrkID+'">Year</label>'+year+"<br/>"+
 				'<label for="amount'+mrkID+'">Amount of Hours</label>'+amountOfHours+"<br/>"+
-				  '<textarea id="'+ msgbox +'" rows="2" cols="20"></textarea>' +'<br/>'+			  
+				  '<br/>'+			  
 				  '<input type="button" value="Reserve" onclick="postAjaxRequest('+ 
-					"'" + msgbox + "', '" + mrkID + "', '"+lat+"', '"+lng+"', '"+ gstBkNm + "', '" + msglist + "'" +')"/></div>'; 
+					"'" + msgbox + "', '" + mrkID + "', '"+lat+"', '"+lng+"', '" + "', '" + msglist + "'" +')"/></div>'; 
 				
 				var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
 				var icons = {
@@ -187,11 +187,12 @@ function httpCallBackFunction_getAjaxRequest() {
 	}		
 }
 
-function postAjaxRequest(postMsg, markerID, latitude, longitude, guestbookName,rspMsgList) {
+function postAjaxRequest(postMsg, markerID, latitude, longitude,rspMsgList) {
 	//alert("postAjaxRequest");
 	var day = document.getElementById("day"+markerID).options[document.getElementById("day"+markerID).selectedIndex].value;
 	var month = document.getElementById("month"+markerID).options[document.getElementById("month"+markerID).selectedIndex].value;
 	var year = document.getElementById("year"+markerID).options[document.getElementById("year"+markerID).selectedIndex].value;
+	var amount = document.getElementById("amount"+markerID).options[document.getElementById("amount"+markerID).selectedIndex].value;
 	var chosenDate = new Date();
 	var now = new Date();
 	chosenDate.setFullYear(year, month, day);
@@ -206,12 +207,11 @@ function postAjaxRequest(postMsg, markerID, latitude, longitude, guestbookName,r
 			xmlHttpReq.open("POST", url, true);
 			xmlHttpReq.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');		
 			
-			var postMsgValue = document.getElementById(postMsg).value;
 			var markerIDValue = markerID; 
-			var guestbookNameValue = guestbookName; 
 	    	
-			xmlHttpReq.send("content="+postMsgValue+"&markerID="+markerIDValue+"&guestbookName="+guestbookNameValue+
-							"&userLatitude="+latitude+"&userLongitude="+longitude+"&measureAccuracy=2");
+			xmlHttpReq.send("markerID="+markerIDValue+
+							"&userLatitude="+latitude+"&userLongitude="+longitude+"&measureAccuracy=2&day="+day+"&month="+
+							month+"&year="+year+"&amount="+amount);
 	    	
 	    	//alert();
 	    	

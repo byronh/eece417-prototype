@@ -36,20 +36,8 @@
 			map = new google.maps.Map(document.getElementById("map-canvas"),
 			  mapOptions);		
 						
-			var mrkID = "0";
 			var gstBkNm = guestbookNameString; //"default";
-			var msgbox = "msgbox_0";	
-			var msglist = "msglist_0";
-									
-			var contentString  = '#' + mrkID + '<div id="content">' +  	
-			  '<div class="msglist" id="'+ msglist +'"></div>' + '</div>' +
-			  '<textarea id="'+ msgbox +'" rows="2" cols="20"></textarea>' +			  
-			  '<input type="button" value="Post" onclick="postAjaxRequest('+ 
-				"'" + msgbox + "', '" + mrkID + "', '" + gstBkNm + "', '" + msglist + "'" +')"/>';  
 			
-			var infowindow = new google.maps.InfoWindow({
-			  content: contentString
-			}); 
 			 
 					
 			// Load the selected markers			
@@ -66,7 +54,6 @@
     if (guestbookName == null) {
         guestbookName = "default";
     }
-    pageContext.setAttribute("guestbookName", guestbookName);
     UserService userService = UserServiceFactory.getUserService();
     User user = userService.getCurrentUser();
     if (user != null) {
@@ -88,8 +75,6 @@
 <h4>Click <a href="guestbook.jsp">here</a> to see your reservations.</h4>
 <p>Please click on a marker to reserve a spot.</p>
 
-<script type="text/javascript">guestbookNameString = "${fn:escapeXml(guestbookName)}";</script>
-<!--<script type="text/javascript">alert(guestbookNameString);</script>-->
 
 <!-- Original -->
 <div id=oldMsgList>
