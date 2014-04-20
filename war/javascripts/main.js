@@ -62,7 +62,41 @@ function httpCallBackFunction_loadMarkers() {
 				var msglist = "msglist_"+mrkID;
 				var gstBkNm = guestbookNameString; // "default"; 
 				
-				var contentString  = 'Parking ' + mrkID + '</div><div>' +
+				var day = "<select name='day' id='day"+mrkID+"'>";
+				var month = "<select name='month' id='month"+mrkID+"'>";
+				var year = "<select name='year' id='year"+mrkID+"'>";
+				
+				for(var i = 0; i <= 30; i++){
+					day += "<option value="+(i+1)+">";
+					day += (i+1)+ "</option>";
+				}
+				day += "</select>";
+				
+				var months = ["January", "Febuary", "March", "April", "May", "June", "July",
+				              "August", "September", "October", "November", "December"];
+				
+				for(var i = 0; i < months.length; i++){
+					month += "<option value="+(i)+">";
+					month += months[i]+ "</option>";
+				}
+				month += "</select>";
+				var currentYear = new Date().getFullYear();
+				for(var i = currentYear; i <= (currentYear + 4); i++){
+					year += "<option value="+ i+">"+i+"</option>";
+				}
+				year += "</select>";
+				
+				var amountOfHours = "<select name='hours' id='amount"+mrkID+"'>";
+				for(var i = 0; i < 24; i++){
+					amountOfHours += "<option value="+(i+1)+">";
+					amountOfHours += (i+1)+ "</option>";
+				}
+				amountOfHours += "</select>";
+				var contentString  = 'Parking ' + mrkID + '</div><div>' + 
+				'<label for="month'+mrkID+'">Month</label>'+month+"<br/>"+
+				'<label for="day'+mrkID+'">Day</label>'+day+"<br/>"+
+				'<label for="year'+mrkID+'">Year</label>'+year+"<br/>"+
+				'<label for="amount'+mrkID+'">Amount of Hours</label>'+amountOfHours+"<br/>"+
 				  '<textarea id="'+ msgbox +'" rows="2" cols="20"></textarea>' +'<br/>'+			  
 				  '<input type="button" value="Reserve" onclick="postAjaxRequest('+ 
 					"'" + msgbox + "', '" + mrkID + "', '"+lat+"', '"+lng+"', '"+ gstBkNm + "', '" + msglist + "'" +')"/></div>'; 
@@ -155,26 +189,36 @@ function httpCallBackFunction_getAjaxRequest() {
 
 function postAjaxRequest(postMsg, markerID, latitude, longitude, guestbookName,rspMsgList) {
 	//alert("postAjaxRequest");
-	try {
-		xmlHttpReq = new XMLHttpRequest();
-		xmlHttpReq.onreadystatechange = httpCallBackFunction_postAjaxRequest;
-		var url = "/sign_in";
-	
-		xmlHttpReq.open("POST", url, true);
-		xmlHttpReq.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');		
-		
-		var postMsgValue = document.getElementById(postMsg).value;
-		var markerIDValue = markerID; 
-		var guestbookNameValue = guestbookName; 
-    	
-		xmlHttpReq.send("content="+postMsgValue+"&markerID="+markerIDValue+"&guestbookName="+guestbookNameValue+
-						"&userLatitude="+latitude+"&userLongitude="+longitude+"&measureAccuracy=2");
-    	
-    	//alert();
-    	
-	} catch (e) {
-    	alert("Error: " + e);
-	}	
+	var day = document.getElementById("day"+markerID).options[document.getElementById("day"+markerID).selectedIndex].value;
+	var month = document.getElementById("month"+markerID).options[document.getElementById("month"+markerID).selectedIndex].value;
+	var year = document.getElementById("year"+markerID).options[document.getElementById("year"+markerID).selectedIndex].value;
+	var chosenDate = new Date();
+	var now = new Date();
+	chosenDate.setFullYear(year, month, day);
+	if (chosenDate < new Date()){
+		alert("Selected date must be in the future");
+	}
+	else {
+		try {
+			xmlHttpReq = new XMLHttpRequest();
+			xmlHttpReq.onreadystatechange = httpCallBackFunction_postAjaxRequest;
+			var url = "/sign_in";
+			xmlHttpReq.open("POST", url, true);
+			xmlHttpReq.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');		
+			
+			var postMsgValue = document.getElementById(postMsg).value;
+			var markerIDValue = markerID; 
+			var guestbookNameValue = guestbookName; 
+	    	
+			xmlHttpReq.send("content="+postMsgValue+"&markerID="+markerIDValue+"&guestbookName="+guestbookNameValue+
+							"&userLatitude="+latitude+"&userLongitude="+longitude+"&measureAccuracy=2");
+	    	
+	    	//alert();
+	    	
+		} catch (e) {
+	    	alert("Error: " + e);
+		}
+	}
 }
 
 function httpCallBackFunction_postAjaxRequest() {
