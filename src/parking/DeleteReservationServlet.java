@@ -27,16 +27,13 @@ public class DeleteReservationServlet extends HttpServlet{
 		 User user = userService.getCurrentUser();
 		 DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 		 Key parkingKey = KeyFactory.createKey("Parking", "Parking");
-		 int hour = Integer.parseInt(req.getParameter("hour"));
-		 int minute = Integer.parseInt(req.getParameter("minute"));
-		 int day = Integer.parseInt(req.getParameter("day"));
-		 int month = Integer.parseInt(req.getParameter("month"));
-		 int year = Integer.parseInt(req.getParameter("year"));
+		 Date givenDate = new Date(req.getParameter("reservationDate"));
 		 int amountOfHours = Integer.parseInt(req.getParameter("amountOfHours"));
+		 int markerID = Integer.parseInt(req.getParameter("markerID"));
 		 float longitude = Float.parseFloat(req.getParameter("longitude"));
 		 Float latitude = Float.parseFloat(req.getParameter("latitude"));
-		 Date givenDate = new Date(year, month, day, hour, minute);
 		 Query query = new Query("Reservation", parkingKey).addFilter("user", Query.FilterOperator.EQUAL, user).
+				 										addFilter("markerID",Query.FilterOperator.EQUAL, markerID).
 				 										addFilter("reservationDate", Query.FilterOperator.EQUAL, givenDate).
 				 										addFilter("amountOfHours", Query.FilterOperator.EQUAL, amountOfHours).
 				 										addFilter("userLongitude", Query.FilterOperator.EQUAL, longitude).
@@ -44,7 +41,8 @@ public class DeleteReservationServlet extends HttpServlet{
 		 List<Entity> reservations = datastore.prepare(query).asList(FetchOptions.Builder.withLimit(10));
 		 if (!reservations.isEmpty()){
 			 for (Entity reservation : reservations) {
-			 
+			 Key key = KeyFactory.createKey("Reservation", reservation.toString());
+			 datastore.delete(key);
 			 }
 		 }
 		 resp.sendRedirect("/guestbook.jsp");

@@ -1,4 +1,4 @@
-<!-- Indices written at Sat, 19 Apr 2014 19:48:42 PDT -->
+<!-- Indices written at Sat, 19 Apr 2014 21:18:24 PDT -->
 
 <datastore-indexes>
 
@@ -6,12 +6,6 @@
     <datastore-index kind="Reservation" ancestor="true" source="auto">
         <property name="user" direction="asc"/>
         <property name="reservationDate" direction="asc"/>
-    </datastore-index>
-
-    <!-- Used 1 time in query history -->
-    <datastore-index kind="Reservation" ancestor="true" source="auto">
-        <property name="user" direction="asc"/>
-        <property name="reservationDate" direction="desc"/>
     </datastore-index>
 
 </datastore-indexes>

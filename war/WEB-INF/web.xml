@@ -30,10 +30,10 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 	</servlet-mapping>
 	<servlet>
 	    <servlet-name>DeleteReservationServlet</servlet-name>
-	    <servlet-class>DeleteReservationServlet</servlet-class>
+	    <servlet-class>parking.DeleteReservationServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
-	    <servlet-name>DelteReservationServlet</servlet-name>
+	    <servlet-name>DeleteReservationServlet</servlet-name>
 	    <url-pattern>/delete</url-pattern>
 	</servlet-mapping>
 	<welcome-file-list>
