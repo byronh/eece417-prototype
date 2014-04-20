@@ -123,7 +123,7 @@
     // Run an ancestor query to ensure we see the most up-to-date
     // view of the reservations belonging to the selected Guestbook.
     Date currentDate = new Date();
-    Query query = new Query("Reservation", parkingKey).addFilter("user", Query.FilterOperator.EQUAL, user).addFilter("reservationDate", Query.FilterOperator.GREATER_THAN_OR_EQUAL, currentDate);
+    Query query = new Query("Reservation", parkingKey).addFilter("user", Query.FilterOperator.EQUAL, user).addFilter("reservationDate", Query.FilterOperator.GREATER_THAN_OR_EQUAL, currentDate).addSort("reservationDate", Query.SortDirection.ASCENDING);
     List<Entity> reservations = datastore.prepare(query).asList(FetchOptions.Builder.withLimit(10));
     if (reservations.isEmpty()) {
         %>
@@ -150,7 +150,7 @@
 	            pageContext.setAttribute("measure_accuracy", reservation.getProperty("measureAccuracy"));
 	            pageContext.setAttribute("reservation_date", reservation.getProperty("reservationDate")); %>
 	            <tr>
-	            	<td><fmt:formatDate value="${reservation_date}" pattern="MM/dd/yy HH:mm:ss" /></td>
+	            	<td><fmt:formatDate value="${reservation_date}" pattern="MM/dd/yy HH:mm" /></td>
 	            	<td>${fn:escapeXml(amount_of_hours) }</td>
 	            	<td>Parking ${fn:escapeXml(marker_id)}</td>
 	            	<td>${fn:escapeXml(user_latitude)}</td>
