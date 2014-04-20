@@ -47,91 +47,65 @@
     </script>
     
   </head>
-  <body>
-<%
-    String guestbookName = request.getParameter("guestbookName");
-    if (guestbookName == null) {
-        guestbookName = "default";
-    }
-    UserService userService = UserServiceFactory.getUserService();
-    User user = userService.getCurrentUser();
-    if (user != null) {
-      pageContext.setAttribute("user", user);
-%>
-<p>Hello, ${fn:escapeXml(user.nickname)}! (You can
-<a href="<%= userService.createLogoutURL(request.getRequestURI()) %>">sign out</a>.)</p>
-<%
-    } else {
-%>
-<p>
-	<a href="<%= userService.createLoginURL(request.getRequestURI()) %>">Sign in</a>
-	to use the system.
-</p>
-<%
-    }
-%>
-<% if (user != null) {%>
-<h4>Click <a href="guestbook.jsp">here</a> to see your reservations.</h4>
-<p>Please click on a marker to reserve a spot.</p>
-<form>
-	<input type="hidden" name="userLatitude" id="userLatitude" />
-   	<input type="hidden" name="userLongitude" id="userLongitude" />
-</form>
-
-<!-- Original -->
-<div id=oldMsgList>
-<%
-    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-    Key guestbookKey = KeyFactory.createKey("Guestbook", guestbookName);
-    
-    // Run an ancestor query to ensure we see the most up-to-date
-    // view of the Greetings belonging to the selected Guestbook.
-    
-    Query query = new Query("Greeting", guestbookKey).addSort("date", Query.SortDirection.DESCENDING);
-    List<Entity> greetings = datastore.prepare(query).asList(FetchOptions.Builder.withLimit(10));
-    
-    if (greetings.isEmpty()) {
-        %>
-        <p>Guestbook '${fn:escapeXml(guestbookName)}' has no messages.</p>
-        <%
-    } else {
-        %>
-        <p>Messages in Guestbook '${fn:escapeXml(guestbookName)}'.</p>
-        <%
-        for (Entity greeting : greetings) {
-            pageContext.setAttribute("greeting_content",
-                                     greeting.getProperty("content"));
-            if (greeting.getProperty("user") == null) {
-                %>
-                <p>An anonymous person wrote:</p>
-                <%
-            } else {
-                pageContext.setAttribute("greeting_user",
-                                         greeting.getProperty("user"));
-                %>
-                <p><b>${fn:escapeXml(greeting_user.nickname)}</b> wrote:</p>
-                <%
-            }
-            %>
-            <blockquote>${fn:escapeXml(greeting_content)}</blockquote>
-            <%
-        }
-    }
-%>
-
-    <form action="/sign_in" method="post">
-      <div><textarea name="content" rows="3" cols="60"></textarea></div>
-      <div><input type="submit" value="Post Greeting" /></div>
-      <input type="hidden" name="guestbookName" value="${fn:escapeXml(guestbookName)}"/>
-    </form>
-    
-</div> 
-<!-- Original -->
-	        
-    <div id="map-canvas"></div>
-    
-	<br/>
-
-	<%} %>
+  <body class="container">
+	<%
+	    String guestbookName = request.getParameter("guestbookName");
+	    if (guestbookName == null) {
+	        guestbookName = "default";
+	    }
+	    UserService userService = UserServiceFactory.getUserService();
+	    User user = userService.getCurrentUser();
+	    if (user != null) {
+	      pageContext.setAttribute("user", user);
+	%>
+	<div class="row">
+		<div class="col-md-12">
+			<p>Hello, ${fn:escapeXml(user.nickname)}! (You can
+				<a href="<%= userService.createLogoutURL(request.getRequestURI()) %>">sign out</a>.)</p>
+		</div>
+	</div>
+	
+	<%
+	    } else {
+	%>
+	<div class="row">
+		<div class="col-md-12">
+			<p class="text-warning">
+				<a href="<%= userService.createLoginURL(request.getRequestURI()) %>">Sign in</a>
+				to use the system.
+			</p>
+		</div>
+	</div>
+			
+	<%
+	    }
+	%>
+	<% if (user != null) {%>
+	<div class="row">
+		<div class="col-md-12"> 
+			<h4>Click <a href="guestbook.jsp">here</a> to see your reservations.</h4>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<p>Please click on a marker to reserve a spot.</p>
+		</div>
+	</div>
+	<div class="row invisible">
+		<div class="col-md-12">
+			<form>
+				<input type="hidden" name="userLatitude" id="userLatitude" />
+			   	<input type="hidden" name="userLongitude" id="userLongitude" />
+			</form>
+		</div>
+	</div>
+	
+	<div id="map-canvas"></div>
+				
+	
+		        
+	    
+	    	
+		<%} %>
   </body>
 </html>

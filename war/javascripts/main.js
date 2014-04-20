@@ -150,7 +150,7 @@ function addInfowindow(marker, content) {
 		infowindow.setContent(""+content);
 		infowindow.setPosition(marker.getPosition());
 		infowindow.open(marker.get('map'), marker);		 
-		getAjaxRequest(); 
+		//getAjaxRequest(); 
 	});
 }
 
