@@ -156,8 +156,7 @@
 	            	<td>Parking ${fn:escapeXml(marker_id)}</td>
 	            	<td>${fn:escapeXml(user_latitude)}</td>
 	            	<td>${fn:escapeXml(user_longitude)}</td>
-	            	<td><a href='delete?reservationDate=${fn:escapeXml(amount_of_hours)}&latitude=${fn:escapeXml(user_latitude)}&
-	            					longitutde=${fn:escapeXml(user_longitude)}&amountOfHours=${fn:escapeXml(amount_of_hours) }&markerID=${fn:escapeXml(marker_id)}'>Remove reservation</a></td>
+	            	<td><a href='delete?reservationDate=${fn:escapeXml(reservation_date)}&latitude=${fn:escapeXml(user_latitude)}&longitude=${fn:escapeXml(user_longitude)}&amountOfHours=${fn:escapeXml(amount_of_hours) }&markerID=${fn:escapeXml(marker_id)}'>Remove reservation</a></td>
 	            	<script>
 			            markers.push(new google.maps.Marker({
 			                position: new google.maps.LatLng(${fn:escapeXml(user_latitude)},${fn:escapeXml(user_longitude)}),

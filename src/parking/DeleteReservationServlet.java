@@ -41,7 +41,7 @@ public class DeleteReservationServlet extends HttpServlet{
 		 List<Entity> reservations = datastore.prepare(query).asList(FetchOptions.Builder.withLimit(10));
 		 if (!reservations.isEmpty()){
 			 for (Entity reservation : reservations) {
-			 Key key = KeyFactory.createKey("Reservation", reservation.toString());
+			 Key key = reservation.getKey();
 			 datastore.delete(key);
 			 }
 		 }
