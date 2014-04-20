@@ -255,7 +255,7 @@ function httpCallBackFunction_postAjaxRequest() {
 		}
 		
 		if(xmlDoc){				
-			alert("Greeting Posted.");
+			alert("Reservation done.");
 			location.reload(true);
 		}else{
 			alert("No data.");
