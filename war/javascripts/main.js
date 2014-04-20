@@ -65,6 +65,8 @@ function httpCallBackFunction_loadMarkers() {
 				var day = "<select name='day' id='day"+mrkID+"'>";
 				var month = "<select name='month' id='month"+mrkID+"'>";
 				var year = "<select name='year' id='year"+mrkID+"'>";
+				var hour = "<select name='hour' id='hour"+mrkID+"'>";
+				var minute = "<select name='minute' id='minute"+mrkID+"'>";
 				
 				for(var i = 0; i <= 30; i++){
 					day += "<option value="+(i+1)+">";
@@ -86,6 +88,14 @@ function httpCallBackFunction_loadMarkers() {
 				}
 				year += "</select>";
 				
+				for(var i = 0; i<=59; i++){
+					minute += "<option value='"+i+"'>"+i+"</option>";
+				}
+				minute += "</select>";
+				for(var i = 0; i<=23; i++){
+					hour += "<option value='"+i+"'>"+i+"</option>";
+				}
+				hour += "</select>";
 				var amountOfHours = "<select name='hours' id='amount"+mrkID+"'>";
 				for(var i = 0; i < 24; i++){
 					amountOfHours += "<option value="+(i+1)+">";
@@ -96,6 +106,8 @@ function httpCallBackFunction_loadMarkers() {
 				'<label for="month'+mrkID+'">Month</label>'+month+"<br/>"+
 				'<label for="day'+mrkID+'">Day</label>'+day+"<br/>"+
 				'<label for="year'+mrkID+'">Year</label>'+year+"<br/>"+
+				'<label for="hour'+mrkID+'">Hour</label>'+hour+"<br/>"+
+				'<label for="minute'+mrkID+'">Minute</label>'+minute+"<br/>"+
 				'<label for="amount'+mrkID+'">Amount of Hours</label>'+amountOfHours+"<br/>"+
 				  '<br/>'+			  
 				  '<input type="button" value="Reserve" onclick="postAjaxRequest('+ 
@@ -192,10 +204,12 @@ function postAjaxRequest(postMsg, markerID, latitude, longitude,rspMsgList) {
 	var day = document.getElementById("day"+markerID).options[document.getElementById("day"+markerID).selectedIndex].value;
 	var month = document.getElementById("month"+markerID).options[document.getElementById("month"+markerID).selectedIndex].value;
 	var year = document.getElementById("year"+markerID).options[document.getElementById("year"+markerID).selectedIndex].value;
+	var minute = document.getElementById("minute"+markerID).options[document.getElementById("minute"+markerID).selectedIndex].value;
+	var hour = document.getElementById("hour"+markerID).options[document.getElementById("hour"+markerID).selectedIndex].value;
 	var amount = document.getElementById("amount"+markerID).options[document.getElementById("amount"+markerID).selectedIndex].value;
 	var chosenDate = new Date();
 	var now = new Date();
-	chosenDate.setFullYear(year, month, day);
+	chosenDate.setFullYear(year, month, day, hour, minute);
 	if (chosenDate < new Date()){
 		alert("Selected date must be in the future");
 	}
@@ -211,7 +225,7 @@ function postAjaxRequest(postMsg, markerID, latitude, longitude,rspMsgList) {
 	    	
 			xmlHttpReq.send("markerID="+markerIDValue+
 							"&userLatitude="+latitude+"&userLongitude="+longitude+"&measureAccuracy=2&day="+day+"&month="+
-							month+"&year="+year+"&amount="+amount);
+							month+"&year="+year+"&amount="+amount+"&hour="+hour+"&minute="+minute);
 	    	
 	    	//alert();
 	    	

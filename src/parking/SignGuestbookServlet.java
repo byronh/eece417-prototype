@@ -28,17 +28,18 @@ public class SignGuestbookServlet extends HttpServlet {
         // This lets us run a transactional ancestor query to retrieve all
         // reservations for a given Guestbook.  However, the write rate to each
         // Guestbook should be limited to ~1/second.
-        String guestbookName = req.getParameter("guestbookName");
         Key parkingKey = KeyFactory.createKey("Parking", "Parking");
         int markerID = Integer.parseInt(req.getParameter("markerID"));
         int day = Integer.parseInt(req.getParameter("day"));
         int month = Integer.parseInt(req.getParameter("month"));
         int year = Integer.parseInt(req.getParameter("year"));
+        int hour = Integer.parseInt(req.getParameter("hour"));
+        int minute = Integer.parseInt(req.getParameter("minute"));
         int amount = Integer.parseInt(req.getParameter("amount"));
         float userLatitude = Float.parseFloat(req.getParameter("userLatitude"));
         float userLongitude = Float.parseFloat(req.getParameter("userLongitude"));
         float measureAccuracy = Float.parseFloat(req.getParameter("measureAccuracy"));
-        Date reservationDate = new Date(year, month, day);
+        Date reservationDate = new Date(year, month, day, hour, minute);
         Date registerDate = new Date();
         Entity reservation = new Entity("Reservation", parkingKey);
         reservation.setProperty("user", user);

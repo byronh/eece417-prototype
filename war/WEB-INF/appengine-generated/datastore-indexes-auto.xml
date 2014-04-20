@@ -1,16 +1,16 @@
-<!-- Indices written at Sat, 19 Apr 2014 19:19:16 PDT -->
+<!-- Indices written at Sat, 19 Apr 2014 19:33:02 PDT -->
 
 <datastore-indexes>
 
-    <!-- Used 19 times in query history -->
+    <!-- Used 6 times in query history -->
+    <datastore-index kind="Greeting" ancestor="true" source="auto">
+        <property name="date" direction="desc"/>
+    </datastore-index>
+
+    <!-- Used 6 times in query history -->
     <datastore-index kind="Reservation" ancestor="true" source="auto">
         <property name="user" direction="asc"/>
         <property name="reservationDate" direction="asc"/>
-    </datastore-index>
-
-    <!-- Used 10 times in query history -->
-    <datastore-index kind="Greeting" ancestor="true" source="auto">
-        <property name="date" direction="desc"/>
     </datastore-index>
 
 </datastore-indexes>
