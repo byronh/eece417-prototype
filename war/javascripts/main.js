@@ -102,7 +102,7 @@ function httpCallBackFunction_loadMarkers() {
 					amountOfHours += (i+1)+ "</option>";
 				}
 				amountOfHours += "</select>";
-				var contentString  = 'Parking ' + mrkID + '</div><div>' + 
+				var contentString  = '<h5>Reservation in Parking ' + mrkID + ' at:</h5></div><div>' + 
 				'<label for="month'+mrkID+'">Month</label>'+month+"<br/>"+
 				'<label for="day'+mrkID+'">Day</label>'+day+"<br/>"+
 				'<label for="year'+mrkID+'">Year</label>'+year+"<br/>"+

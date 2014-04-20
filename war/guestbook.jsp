@@ -121,12 +121,12 @@
 		<% if (user != null){ %>
 		<div class="row">
 			<div class="col-md-12">
-				<h1>Listing your reservations</h1>
+				<h4>Listing your reservations</h4>
 			</div>
 		</div>
 		<div class="row">
 			<div class="col-md-12">
-				<h2>Click <a href="testapp.jsp">here</a> to make a new reservation.</h2>
+				<h4>Click <a href="testapp.jsp">here</a> to make a new reservation.</h4>
 			</div>
 		</div>
 		<div class="row hidden">
