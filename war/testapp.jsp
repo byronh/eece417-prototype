@@ -26,7 +26,7 @@
 	  
 		function initialize() {
 					
-			var myLatlng = new google.maps.LatLng(37.33152141760375,-122.04732071026367);   
+			var myLatlng = new google.maps.LatLng(49.266446,-123.245577);   
 		   
 			var mapOptions = {
 			  center: myLatlng,
@@ -36,10 +36,8 @@
 			map = new google.maps.Map(document.getElementById("map-canvas"),
 			  mapOptions);		
 						
-			var gstBkNm = guestbookNameString; //"default";
 			
-			 
-					
+	
 			// Load the selected markers			
 			loadMarkers();       
 		}      
@@ -74,7 +72,10 @@
 <% if (user != null) {%>
 <h4>Click <a href="guestbook.jsp">here</a> to see your reservations.</h4>
 <p>Please click on a marker to reserve a spot.</p>
-
+<form>
+	<input type="hidden" name="userLatitude" id="userLatitude" />
+   	<input type="hidden" name="userLongitude" id="userLongitude" />
+</form>
 
 <!-- Original -->
 <div id=oldMsgList>

@@ -117,6 +117,11 @@
 <% if (user != null){ %>
 <h1>Listing your reservations</h1>
 <h2>Click <a href="testapp.jsp">here</a> to make a new reservation.</h2>
+<form>
+	<input type="hidden" name="userLatitude" id="userLatitude" />
+   	<input type="hidden" name="userLongitude" id="userLongitude" />
+    <input type="hidden" name="measureAccuracy" id="measureAccuracy" />
+</form>
 <%
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     Key parkingKey = KeyFactory.createKey("Parking", "Parking");
