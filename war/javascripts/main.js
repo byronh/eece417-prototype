@@ -242,6 +242,7 @@ function httpCallBackFunction_postAjaxRequest() {
 		
 		if(xmlDoc){				
 			alert("Greeting Posted.");
+			location.reload(true);
 		}else{
 			alert("No data.");
 		}	
