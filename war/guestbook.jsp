@@ -12,7 +12,8 @@
 <%@ page import="com.google.appengine.api.datastore.Key" %>
 <%@ page import="com.google.appengine.api.datastore.KeyFactory" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ page import="java.util.Date" %>
 <html>
 	<head>
 	<link type="text/css" rel="stylesheet" href="/stylesheets/main.css" />
@@ -114,54 +115,61 @@
 %>
 
 <% if (user != null){ %>
-<h1>Listing your greetings</h1>
+<h1>Listing your reservations</h1>
 <h2>Click <a href="testapp.jsp">here</a> to make a new reservation.</h2>
 <%
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-    Key guestbookKey = KeyFactory.createKey("Parking", "Parking");
+    Key parkingKey = KeyFactory.createKey("Parking", "Parking");
     // Run an ancestor query to ensure we see the most up-to-date
-    // view of the Greetings belonging to the selected Guestbook.
-    Query query = new Query("Greeting", guestbookKey).addSort("date", Query.SortDirection.DESCENDING).addFilter("user", Query.FilterOperator.EQUAL, user);
-    List<Entity> greetings = datastore.prepare(query).asList(FetchOptions.Builder.withLimit(10));
-    if (greetings.isEmpty()) {
+    // view of the reservations belonging to the selected Guestbook.
+    Date currentDate = new Date();
+    Query query = new Query("Reservation", parkingKey).addFilter("user", Query.FilterOperator.EQUAL, user).addFilter("reservationDate", Query.FilterOperator.GREATER_THAN_OR_EQUAL, currentDate);
+    List<Entity> reservations = datastore.prepare(query).asList(FetchOptions.Builder.withLimit(10));
+    if (reservations.isEmpty()) {
         %>
         <p>You have not done any reservation.</p>
         <%
     } else {
         %>
-        <%
-        for (Entity greeting : greetings) {
-            pageContext.setAttribute("greeting_content", greeting.getProperty("content"));
-            pageContext.setAttribute("marker_id", greeting.getProperty("markerID"));
-            pageContext.setAttribute("user_latitude", greeting.getProperty("userLatitude"));
-            pageContext.setAttribute("user_longitude", greeting.getProperty("userLongitude"));
-            pageContext.setAttribute("measure_accuracy", greeting.getProperty("measureAccuracy"));
-            pageContext.setAttribute("greeting_user", greeting.getProperty("user")); %>
-            <p><b>${fn:escapeXml(greeting_user.nickname)}</b> wrote:</p>
-            <blockquote>${fn:escapeXml(greeting_content)}</blockquote>
-            
-            <% if (greeting.getProperty("userLatitude") != null && 
-            		greeting.getProperty("userLongitude") != null){ %>
-            	<p> Message sent at latitude: ${fn:escapeXml(user_latitude)}, 
-	            Latitude: ${fn:escapeXml(user_longitude)}.
-	            Measure accuracy: ${fn:escapeXml(measure_accuracy)} meters.	
-	            </p>
-	            <p>
-	            	MarkerID: ${fn:escapeXml(marker_id)}
-	            </p>
-            	<script>
-		            markers.push(new google.maps.Marker({
-		                position: new google.maps.LatLng(${fn:escapeXml(user_latitude)},${fn:escapeXml(user_longitude)}),
-		                title: '${fn:escapeXml(greeting_user.nickname)}'
-		            }));
-            	</script>
-            <% } %>
-            <%
-        }
-    }
-%>
+        <table>
+        <thead>	
+        	<tr>
+        		<td>Date(m/d/y)</td>
+        		<td>Amount Of Hours reserved</td>
+        		<td>Parking</td>
+        		<td colspan="2" >Geolocation (Latitude/Longitude) </td>
+        	</tr> 
+        </thead>
+        <tbody>
+	        <%
+	        for (Entity reservation : reservations) {
+	            pageContext.setAttribute("amount_of_hours", reservation.getProperty("amountOfHours"));
+	            pageContext.setAttribute("marker_id", reservation.getProperty("markerID"));
+	            pageContext.setAttribute("user_latitude", reservation.getProperty("userLatitude"));
+	            pageContext.setAttribute("user_longitude", reservation.getProperty("userLongitude"));
+	            pageContext.setAttribute("measure_accuracy", reservation.getProperty("measureAccuracy"));
+	            pageContext.setAttribute("reservation_date", reservation.getProperty("reservationDate")); %>
+	            <tr>
+	            	<td><fmt:formatDate value="${reservation_date}" pattern="MM/dd/yy HH:mm:ss" /></td>
+	            	<td>${fn:escapeXml(amount_of_hours) }</td>
+	            	<td>Parking ${fn:escapeXml(marker_id)}</td>
+	            	<td>${fn:escapeXml(user_latitude)}</td>
+	            	<td>${fn:escapeXml(user_longitude)}</td>
+	            	<script>
+			            markers.push(new google.maps.Marker({
+			                position: new google.maps.LatLng(${fn:escapeXml(user_latitude)},${fn:escapeXml(user_longitude)}),
+			                title: '${fn:escapeXml(reservation_user.nickname)}'
+			            }));
+	            	</script>
+            	</tr>
+	            <% } %>
+	            <%
+	        } %>
+	        </tbody>
+	        </table>
+        <div id="map-canvas"></div>
+    <% }
+	%>
 
-	<div id="map-canvas"></div>
-	<%} %>
   </body>
 </html>

@@ -23,13 +23,13 @@ public class SignGuestbookServlet extends HttpServlet {
         UserService userService = UserServiceFactory.getUserService();
         User user = userService.getCurrentUser();
 
-        // We have one entity group per Guestbook with all Greetings residing
+        // We have one entity group per Guestbook with all reservations residing
         // in the same entity group as the Guestbook to which they belong.
         // This lets us run a transactional ancestor query to retrieve all
-        // Greetings for a given Guestbook.  However, the write rate to each
+        // reservations for a given Guestbook.  However, the write rate to each
         // Guestbook should be limited to ~1/second.
         String guestbookName = req.getParameter("guestbookName");
-        Key guestbookKey = KeyFactory.createKey("Parking", "Parking");
+        Key parkingKey = KeyFactory.createKey("Parking", "Parking");
         int markerID = Integer.parseInt(req.getParameter("markerID"));
         int day = Integer.parseInt(req.getParameter("day"));
         int month = Integer.parseInt(req.getParameter("month"));
@@ -40,17 +40,17 @@ public class SignGuestbookServlet extends HttpServlet {
         float measureAccuracy = Float.parseFloat(req.getParameter("measureAccuracy"));
         Date reservationDate = new Date(year, month, day);
         Date registerDate = new Date();
-        Entity greeting = new Entity("Greeting", guestbookKey);
-        greeting.setProperty("user", user);
-        greeting.setProperty("date", registerDate);
-        greeting.setProperty("reservationDate", reservationDate);
-        greeting.setProperty("amountOfHours", amount);
-        greeting.setProperty("userLatitude", userLatitude);
-        greeting.setProperty("userLongitude", userLongitude);
-        greeting.setProperty("measureAccuracy", measureAccuracy);
-        greeting.setProperty("markerID", markerID);
+        Entity reservation = new Entity("Reservation", parkingKey);
+        reservation.setProperty("user", user);
+        reservation.setProperty("date", registerDate);
+        reservation.setProperty("reservationDate", reservationDate);
+        reservation.setProperty("amountOfHours", amount);
+        reservation.setProperty("userLatitude", userLatitude);
+        reservation.setProperty("userLongitude", userLongitude);
+        reservation.setProperty("measureAccuracy", measureAccuracy);
+        reservation.setProperty("markerID", markerID);
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-        datastore.put(greeting);
+        datastore.put(reservation);
 
         resp.sendRedirect("/guestbook.jsp");
     }
